@@ -1,8 +1,29 @@
 from flask import Flask
 from pathlib import Path
 import os
+import pyrebase
+import firebase_admin
+from firebase_admin import credentials
 
+key_path = Path(__file__).resolve()
+key_path = key_path.parent.parent
+key_path = key_path.joinpath('ffsite/key/serviceAccountKey.json').__str__()
+cred = credentials.Certificate(key_path)
+firebase_admin.initialize_app(cred)
 
+config ={
+    'apiKey': "AIzaSyANowCknqQtfkKjzeQBTmfVq0FStjLzc7E",
+    'authDomain': "fungi-fantasia.firebaseapp.com",
+    'projectId': "fungi-fantasia",
+    'storageBucket': "fungi-fantasia.appspot.com",
+    'messagingSenderId': "165617223999",
+    'appId': "1:165617223999:web:cabafd87a41744f2912b8a",
+    'databaseURL': "fungi-fantasia.appspot.com"
+}
+
+firebase = pyrebase.initialize_app(config)
+
+storage = firebase.storage()
 
 def create_app(test_config=None):
     # create and configure the app
@@ -30,6 +51,9 @@ def create_app(test_config=None):
 
     from . import about
     app.register_blueprint(about.bp)
+
+    from . import auth
+    app.register_blueprint(auth.bp)
 
     return app
 

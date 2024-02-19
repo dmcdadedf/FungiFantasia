@@ -4,6 +4,10 @@
 <body>
     <div class="container">
         <div id="wrapper">
+            {% if g.user %}
+            ADMIN ACCOUNT ACTIVE
+            <a href="{{ url_for('auth.logout') }}">Logout</a>
+            {% endif %}
             <div id="nav">
                 {% block nav %}{% include 'nav.html' %}{% endblock %}
             </div>
