@@ -4,12 +4,16 @@ import os
 import pyrebase
 import firebase_admin
 from firebase_admin import credentials
-
-key_path = Path(__file__).resolve()
-key_path = key_path.parent.parent
-key_path = key_path.joinpath('ffsite/key/serviceAccountKey.json').__str__()
-cred = credentials.Certificate(key_path)
-firebase_admin.initialize_app(cred)
+try:
+    key_path = Path(__file__).resolve()
+    key_path = key_path.parent.parent
+    key_path = key_path.joinpath('ffsite/key/serviceAccountKey.json').__str__()
+    cred = credentials.Certificate(key_path)
+    firebase_admin.initialize_app(cred)
+except:
+    cred = credentials.Certificate('/etc/secrets/serviceAccountKey.json')
+    firebase_admin.initialize_app(cred)
+    
 
 config ={
     'apiKey': "AIzaSyANowCknqQtfkKjzeQBTmfVq0FStjLzc7E",
