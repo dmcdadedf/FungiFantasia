@@ -1,7 +1,20 @@
 from flask import Flask
 from pathlib import Path
 import os
+import pyrebase
 
+config = {
+    'apiKey' : "AIzaSyANowCknqQtfkKjzeQBTmfVq0FStjLzc7E",
+    'authDomain': "fungi-fantasia.firebaseapp.com",
+    'projectId': "fungi-fantasia",
+    'storageBucket': "fungi-fantasia.appspot.com",
+    'messagingSenderId': "165617223999",
+    'appId': "1:165617223999:web:cabafd87a41744f2912b8a"
+}
+
+firebase = pyrebase.initialize_app(config)
+
+storage = firebase.storage()
 
 def create_app(test_config=None):
     # create and configure the app
