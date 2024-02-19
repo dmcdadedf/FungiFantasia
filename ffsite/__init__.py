@@ -2,6 +2,14 @@ from flask import Flask
 from pathlib import Path
 import os
 import pyrebase
+import firebase_admin
+from firebase_admin import credentials
+
+key_path = Path(__file__).resolve()
+key_path = key_path.parent.parent
+key_path = key_path.joinpath('ffsite/key/serviceAccountKey.json').__str__()
+cred = credentials.Certificate(key_path)
+firebase_admin.initialize_app(cred)
 
 config ={
     'apiKey': "AIzaSyANowCknqQtfkKjzeQBTmfVq0FStjLzc7E",
@@ -43,6 +51,9 @@ def create_app(test_config=None):
 
     from . import about
     app.register_blueprint(about.bp)
+
+    from . import auth
+    app.register_blueprint(auth.bp)
 
     return app
 
